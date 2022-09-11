@@ -1,17 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient } = require('mongodb');
-
-const client = new MongoClient('mongodb+srv://Nikita:Gtnhjcjdbx1@cluster0.kjm6fgr.mongodb.net/?retryWrites=true&w=majority');
-
-const start = async () => {
-    try {
-        await client.connect();
-        console.log('Database connected');
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 const app = express();
 
@@ -26,8 +14,6 @@ app.use(
 );
 
 app.use("/api", require("./routes/routes"));
-
-start();
 
 app.listen(PORT, () => {
     console.log(`Server has been started on port ${PORT}`);
