@@ -1,0 +1,56 @@
+.user-page-wrapper {
+    display: flex;
+    width: 100vw;
+    margin: 0 auto;
+}
+
+/* user_info */
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 70vw;
+}
+
+.user-posts {
+    display: flex;
+    flex-direction: column;
+}
+
+/* side_menu */
+
+.left-side-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30vw;
+    border-right: 7px solid plum;
+}
+
+.side-menu-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 5vw;
+}
+
+.menu-option {
+    width: 120px;
+    height: 30px;
+    background-color: antiquewhite;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 25px;
+    color: brown;
+    border: 2px solid wheat;
+    font-size: large;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.menu-option:hover {
+    background-color: beige;
+    transition: 0.5s;
+    border: 2px solid gray;
+}
