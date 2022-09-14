@@ -4,13 +4,13 @@ import './styles/index.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import store from './store/store';
-import UserPage from './pages/Main/User/user_page';
+import Main from './pages/Main/main_view';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <UserPage />
+        <Main />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

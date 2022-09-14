@@ -1,7 +1,7 @@
 import React from 'react';
+
 import SideMenu from './components/side_menu';
-import UserInfo from './components/user_info';
-import UserPosts from './components/user_posts';
+import ViewController from './components/view_controller';
 
 function UserPage() {
   return (
@@ -9,10 +9,7 @@ function UserPage() {
       <div className="left-side-wrapper">
         <SideMenu />
       </div>
-      <div className="right-side-wrapper">
-        <UserInfo />
-        <UserPosts />
-      </div>
+      <ViewController />
     </div>
   );
 }
