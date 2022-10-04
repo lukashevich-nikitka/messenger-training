@@ -10,8 +10,10 @@ function DefaultView({ currentUserData, jwt }) {
   const dispatch = useDispatch();
   const { getCurrentUserData } = userThunks;
   useEffect(() => {
-    dispatch(getCurrentUserData(jwt));
-  }, [dispatch, getCurrentUserData, jwt]);
+    if (name === 'unknown') {
+      dispatch(getCurrentUserData(jwt));
+    }
+  }, [dispatch, getCurrentUserData, jwt, name]);
   return (
     <div className="right-side-wrapper">
       <div className="user-info">

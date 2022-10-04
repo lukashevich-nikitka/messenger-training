@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken');
 
 const client = new MongoClient('mongodb+srv://Nikita:Gtnhjcjdbx1@cluster0.kjm6fgr.mongodb.net/?retryWrites=true&w=majority');
@@ -73,10 +73,38 @@ router.get('/user_data/:jwt', async (req, res) => {
 
 router.put('/subscribe/:id', async (req, res) => {
     await client.connect();
-    const newFriend = await users.findOne({ _id: req.params.id });
-    // await users.updateOne()
-    // Нужно дописать логику с добавлением друзей! При подписке на пользователя, нужно отпавить с фронта текущий id 
-    // пользователя и id нового друга
+    const subscriber = await users.findOne({ _id: ObjectId(req.body.userId) });
+    await users.updateOne({ _id: ObjectId(req.params.id) },
+        {
+            $addToSet: {
+                friends: {
+                    id: req.body.userId, name: subscriber.name, surname: subscriber.surname,
+                }
+            }
+        });
+    const user = await users.findOne({ _id: ObjectId(req.params.id) });
+    res.json(user.friends);
+});
+
+router.get('/friends/:id', async (req, res) => {
+    await client.connect();
+    const user = await users.findOne({ _id: ObjectId(req.params.id) });
+    res.json(user.friends);
+})
+
+router.put('/options/info/:id', async (req, res) => {
+    await client.connect();
+    const changedData = Object.keys(req.body);
+    const updateUser = {};
+    for (let i = 0; i < changedData.length; i++) {
+        await users.updateOne({ _id: ObjectId(req.params.id) }, {
+            $set: {
+                [changedData[i]]: req.body[changedData[i]]
+            }
+        });
+        updateUser[changedData[i]] = req.body[changedData[i]];
+    };
+    res.json(updateUser);
 })
 
 module.exports = router;

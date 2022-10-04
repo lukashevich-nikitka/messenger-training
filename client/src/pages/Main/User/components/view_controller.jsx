@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import SearchView from './search_view';
 import FriendsView from './friends_view';
 import DefaultView from './default_view';
+import OptionsView from './options_view';
 
-function ViewController({ friends, search }) {
+function ViewController({ friends, search, options }) {
   if (search) {
     return (
       <SearchView />
@@ -14,6 +15,11 @@ function ViewController({ friends, search }) {
   if (friends) {
     return (
       <FriendsView />
+    );
+  }
+  if (options) {
+    return (
+      <OptionsView />
     );
   }
   return (

@@ -1,8 +1,16 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import userThunks from '../../../../store/Main/User/thunks';
 
 function SearchView({ userListDisplay, currentId }) {
+  const {
+    subscribeToUser,
+  } = userThunks;
+  const dispatch = useDispatch();
+  const subscribe = (userId) => dispatch(subscribeToUser({
+    id: currentId, subscribeId: { userId },
+  }));
   return (
     <div className="search-users-wrapper">
       {userListDisplay.filter((el) => el._id !== currentId).map((el) => (
@@ -10,7 +18,7 @@ function SearchView({ userListDisplay, currentId }) {
           <div className="search-user-info">
             {`${el.name} ${el.surname}`}
           </div>
-          <button className="subscribe-button" type="submit">subscribe</button>
+          <button className="subscribe-button" type="submit" onClick={() => subscribe(el._id)}>subscribe</button>
         </div>
       ))}
     </div>

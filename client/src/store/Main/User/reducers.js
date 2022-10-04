@@ -7,7 +7,9 @@ const {
   profile, friends, messages, groups, options, search,
 } = userActions.navigation;
 
-const { getUserBySelector, getCurrentUserData } = userThunks;
+const {
+  getUserBySelector, getCurrentUserData, fillOutTheInfo, subscribeToUser, getFriendsList,
+} = userThunks;
 
 const initialNavigationState = {
   profile: true,
@@ -23,6 +25,7 @@ const initialUserListDisplayState = {
     name: 'unknown', age: 'unknown', status: 'unknown', education: 'unknown', profession: 'unknown',
   },
   userListDisplay: [],
+  userSubscribers: [],
 };
 
 const userNavigationReducers = createReducer(initialNavigationState, {
@@ -83,6 +86,15 @@ const userListDisplayReducers = createReducer(initialUserListDisplayState, {
   },
   [getCurrentUserData.fulfilled]: (state, action) => {
     state.currentUserData = action.payload;
+  },
+  [fillOutTheInfo.fulfilled]: (state, action) => {
+    state.currentUserData = { ...state.currentUserData, ...action.payload };
+  },
+  [subscribeToUser.fulfilled]: (state, action) => {
+    state.userSubscribers = action.payload;
+  },
+  [getFriendsList.fulfilled]: (state, action) => {
+    state.userSubscribers = action.payload;
   },
 });
 
