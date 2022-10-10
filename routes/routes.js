@@ -15,7 +15,8 @@ router.post('/auth', async (req, res) => {
         res.json('user with such data already exists')
     } else {
         users.insertOne({
-            ...req.body, friends: [], age: 'unknown', status: 'unknown', education: 'unknown', profession: 'unknown', role: 'user'
+            ...req.body, friends: [], messages: [],
+            age: 'unknown', status: 'unknown', education: 'unknown', profession: 'unknown', role: 'user'
         });
         res.json('success');
     }
@@ -105,6 +106,20 @@ router.put('/options/info/:id', async (req, res) => {
         updateUser[changedData[i]] = req.body[changedData[i]];
     };
     res.json(updateUser);
+})
+
+router.get('/messages_list/:id', async (req, res) => {
+    await client.connect();
+    const user = await users.findOne({ _id: ObjectId(req.params.id) });
+    (user.messages) ? res.json(user.messages) : res.json([]);
+});
+
+router.get('/chat_messages/:currentId/:friendId', async (req, res) => {
+    await client.connect();
+    const chatHistory = await users.findOne({ _id: ObjectId(req.params.currentId), messages: { $elemMatch: { id: req.params.friendId } } });
+    // const chatHistory = current.messages.find((el) => el.id === req.params.friendId)
+    (chatHistory) ? res.json(chatHistory.messages.find((el) => el.id === req.params.friendId).messages) : res.json([]);
+
 })
 
 module.exports = router;

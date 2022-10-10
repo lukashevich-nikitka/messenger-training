@@ -92,3 +92,11 @@
 .subscribe-button {
     cursor: pointer;
 }
+
+.previous-messages-wrapper {
+    height: 20vw;
+}
+
+.textarea-wrapper {
+    display: flex;
+}

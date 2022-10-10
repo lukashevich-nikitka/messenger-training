@@ -16,7 +16,7 @@ const subscribeToUser = createAsyncThunk('/main/user/userDataDisplay/friends_lis
   return response.data;
 });
 
-const getFriendsList = createAsyncThunk('/main/userDataDisplay/useSubscribers', async (id) => {
+const getFriendsList = createAsyncThunk('/main/userDataDisplay/user_subscribers', async (id) => {
   const response = await axios.get(`http://localhost:4200/api/friends/${id}`);
   return response.data;
 });
@@ -26,12 +26,24 @@ const fillOutTheInfo = createAsyncThunk('main/userDataDisplay/currentUserData/ed
   return response.data;
 });
 
+const getMessages = createAsyncThunk('main/userDataDisplay/user_messages', async (id) => {
+  const response = await axios.get(`http://localhost:4200/api/messages_list/${id}`);
+  return response.data;
+});
+
+const getChatMessages = createAsyncThunk('main/userDataDisplay/chat_messages', async (ids) => {
+  const response = await axios.get(`http://localhost:4200/api/chat_messages/${ids.currentId}/${ids.friendId}`);
+  return response.data;
+});
+
 const userThunks = {
   getUserBySelector,
   getCurrentUserData,
   fillOutTheInfo,
   subscribeToUser,
   getFriendsList,
+  getMessages,
+  getChatMessages,
 };
 
 export default userThunks;
