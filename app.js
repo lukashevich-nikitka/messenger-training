@@ -28,7 +28,7 @@ app.ws("/chat/:id/:friendid", (ws, req) => {
           socket.id === req.params.id || socket.id === req.params.friendid
       )
       .forEach((socket) =>
-        socket.send(JSON.stringify({ msg, client: req.params.id }))
+        socket.send(JSON.stringify({ ...JSON.parse(msg), client: req.params.id }))
       );
     const currentUser = await users.findOne({ _id: ObjectId(req.params.id) });
     const friend = await users.findOne({ _id: ObjectId(req.params.friendid) });

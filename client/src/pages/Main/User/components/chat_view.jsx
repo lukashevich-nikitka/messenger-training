@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-undef */
 /* eslint-disable no-new */
 /* eslint-disable no-param-reassign */
 import React, { useEffect, useMemo } from 'react';
@@ -10,15 +12,15 @@ import '../../../../styles/User.css';
 function ChatView({ chatMessages, currentId, friendId }) {
   const { getChatMessages } = userThunks;
   const { updateChat } = userActions.dataDisplay;
-  const ws = useMemo(() => new WebSocket(`ws://localhost:4200/chat/${currentId}/${friendId}`), [currentId, friendId]);
-  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
+  const ws = useMemo(() => new WebSocket(`ws://localhost:4200/chat/${currentId}/${friendId}`), [currentId, friendId]);
+  useMemo(() => ws.addEventListener('message', (e) => {
+    dispatch(updateChat(JSON.parse(e.data)));
+  }), [updateChat]);
   useEffect(() => {
-    ws.addEventListener('message', (msg) => {
-      dispatch(updateChat(JSON.parse(msg)));
-    });
     dispatch(getChatMessages({ currentId, friendId }));
-  }, [currentId, dispatch, friendId, getChatMessages, ws]);
+  }, [currentId, dispatch, friendId, getChatMessages, updateChat, ws]);
+  const { register, handleSubmit } = useForm();
   const sendMessage = function (data) {
     data.timeStamp = new Date();
     ws.send(JSON.stringify(data));
